@@ -10,28 +10,28 @@
 ## Connections
 
 * YL69:
-** A0 -> A7
-** D0 -> Unused
-** GND -> GND
-** VCC -> 5V
+  * `A0` -> `A7`
+  * `D0` -> Unused
+  * `GND` -> `GND`
+  * `VCC` -> `5V`
 * DHT22
-** + -> 5V
-** out -> D2
-** - -> GND
+  * `+` -> `5V`
+  * `out` -> `D2`
+  * `-` -> `GND`
 * Photoresistor
-** Leg1 -> 5V
-** Leg2 -> A7
-** 10K R -> A7 (voltage divider)
-** 10K R -> GND
+  * `Leg1` -> `5V`
+  * `Leg2` -> `A7`
+  * `10K R` -> `A7` (voltage divider)
+  * `10K R` -> `GND`
 * Nokia 5110 LCD
-** RST -> D6
-** CE -> D7
-** DC -> D5
-** DIN -> D4
-** CLK -> D8
-** VCC -> 3V3
-** LIGHT -> 290R -> D11
-** GND -> GND
+  * `RST` -> `D6`
+  * `CE` -> `D7`
+  * `DC` -> `D5`
+  * `DIN` -> `D4`
+  * `CLK` -> `D8`
+  * `VCC` -> `3V3`
+  * `LIGHT` -> `290R` -> `D11`
+  * `GND` -> `GND`
 
 ![Photo of the setup](photo.jpg)
 

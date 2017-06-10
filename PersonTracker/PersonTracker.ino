@@ -1,13 +1,13 @@
-#define DISTANCE_MAX 100.0
-#define HEADING_INCREMENT 10
+#define DISTANCE_MAX 50.0
+#define HEADING_INCREMENT_DEGREES 10
 
 // Sensors: Trigger, Echo
-byte leftSensor[] = {A4, A5};
-byte centerSensor[] = {10, 9};
+byte leftSensor[] = {10, 9};
+byte centerSensor[] = {A4, A5};
 byte rightSensor[] = {A2, A3};
 byte* sensors[] = {leftSensor, centerSensor, rightSensor};
 
-int duration;
+long duration;
 float distance;
 
 float leftDistance;
@@ -16,6 +16,22 @@ float rightDistance;
 
 char newDirection;
 int heading;
+
+#include <Servo.h>
+
+#define SERVO_PIN 3
+#define SERVO_MIN 0
+#define SERVO_MAX 180
+// Determine the servo delay needed to move the increment, according to its specs.
+#define SERVO_SPEED_SPEC_MS 170.0
+#define SERVO_SPEED_SPEC_DEGREES 60.0
+#define SERVO_MOVE_DELAY_MS (SERVO_SPEED_SPEC_MS / SERVO_SPEED_SPEC_DEGREES * HEADING_INCREMENT_DEGREES)
+
+Servo servo;
+int servoPosition = 90;
+
+#define PIR_PIN 2
+bool personVisible = false;
 
 void setup()
 {
@@ -34,13 +50,32 @@ void setup()
     pinMode(echo, INPUT);
   }
 
-  delay(6000);
+  Serial.println("[setup] Sensors initialized.");
 
-  Serial.println("Distance:");
+  // Initialize the servo.
+  servo.attach(SERVO_PIN);
+  // Set it to mid-point.
+  servo.write(servoPosition);
+
+  Serial.println("[setup] Servo initialized.");
+
+  delay(2000);
 }
 
 void loop()
 {
+  // Scan for any persons in sight.
+  personVisible = digitalRead(PIR_PIN);
+  if (!personVisible) {
+    // No one around. Stop here and sleep a bit longer.
+    Serial.println("No one around.");
+    delay(500);
+    return;
+  }
+
+  Serial.println("Person detected!");
+  
+  // Read the sensors
   leftDistance = readSensor(leftSensor);
   centerDistance = readSensor(centerSensor);
   rightDistance = readSensor(rightSensor);
@@ -52,19 +87,41 @@ void loop()
   Serial.print("Right:\t");
   Serial.println(rightDistance);
 
+  // Determine the heading to move to.
   bool isReadingLeft = isReading(leftDistance);
   bool isReadingCenter = isReading(centerDistance);
   bool isReadingRight = isReading(rightDistance);
   newDirection = getNewDirection(isReadingLeft, isReadingCenter, isReadingRight);
-  heading = newDirection * HEADING_INCREMENT;
+  heading = newDirection * HEADING_INCREMENT_DEGREES * -1; // My servo has 180* to the left and 0* to the right, so I reverse the direction.
 
   Serial.print("Rotate: ");
   Serial.print(heading);
   Serial.println(" degrees");
 
+  // Determine the new servo's position.
+  servoPosition += heading;
+
+  // Stay within the limits of the servo's movement range.
+  if (servoPosition > SERVO_MAX) {
+    servoPosition = 180;
+  } else if (servoPosition < SERVO_MIN) {
+    servoPosition = 0;
+  }
+
+  Serial.print("Position: ");
+  Serial.print(servoPosition);
+  Serial.print("...");
+
+  // Actually move to the new position.
+  servo.write(servoPosition);
+  Serial.print("move wait: "); Serial.println(SERVO_MOVE_DELAY_MS);
+  delay(SERVO_MOVE_DELAY_MS);
+
+  Serial.println("OK");
+
   Serial.println();
 
-  delay(500);
+  delay(50);
 }
 
 float readSensor(byte sensor[]) {

@@ -1,8 +1,8 @@
 // http://labs.arduino.org/Arduino+Nano+Ultrasonic+Sensor+Example
 // Ultrasonic Sensor Example
 
-int trig = 9;
-int echo = 8;
+int trig = 10;
+int echo = 9;
 int duration;
 float distance;
 float meter;
@@ -41,5 +41,5 @@ void loop()
     Serial.println("m");
   }
 
-  delay(500);
+  delay(100);
 }

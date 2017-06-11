@@ -21,7 +21,7 @@
 * Photoresistor
   * `Leg1` -> `5V`
   * `Leg2` -> `A7`
-  * `10K R` -> `A7` (voltage divider)
+  * `Leg2` -> `10K R` (voltage divider)
   * `10K R` -> `GND`
 * Nokia 5110 LCD
   * `RST` -> `D6`

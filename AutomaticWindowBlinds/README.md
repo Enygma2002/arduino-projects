@@ -8,10 +8,10 @@ The premise is that a lighter outside environment will reflect light on the wind
 
 ## Components
 
-1x 28BYJ-48 Stepper Motor, 5VDC
-1x ULN2003A Stepper Motor Driver
-2x Photoresistors
-2x 10K Resistors
+* 1x 28BYJ-48 Stepper Motor, 5VDC
+* 1x ULN2003A Stepper Motor Driver
+* 2x Photoresistors
+* 2x 10K Resistors
 
 ## Connections
 

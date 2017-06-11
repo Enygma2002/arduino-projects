@@ -21,7 +21,7 @@ boolean blindsClosed = false;
 // (360°/5.625°)*64"Gear ratio" = 64 * 64 = 4096
 #define STEPS_PER_TURN 4096
 
-#define TURNS_TO_OPERATE_BLINDS 1
+#define TURNS_TO_OPERATE_BLINDS 2
 #define STEPS_TO_OPERATE_BLINDS STEPS_PER_TURN * TURNS_TO_OPERATE_BLINDS
 
 void setup() {
@@ -68,7 +68,7 @@ void operateBlinds(boolean close) {
 
   for (int s = 0; s < STEPS_TO_OPERATE_BLINDS; s++) {
     // true for clockwise, false for counter-clockwise
-    stepper.step(close);
+    stepper.step(!close);
   }
 
   Serial.println("Done.");

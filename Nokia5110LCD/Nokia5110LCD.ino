@@ -22,9 +22,9 @@
 // pin 5 - Data/Command select (D/C)
 // pin 4 - LCD chip select (CS)
 // pin 3 - LCD reset (RST)
-Adafruit_PCD8544 display = Adafruit_PCD8544(8, 4, 5, 7, 6);
+Adafruit_PCD8544 display = Adafruit_PCD8544(4, 5, 6, 7, 8);
 // My setup:
-//   CLK=8, DIN=4, CE=7, DC=5, RST=6
+//   CLK=4, DIN=5, DC=6, CE=7, RST=8
 //   VCC=3V3, LIGHT=290R->11, GND=GND
 
 // Hardware SPI (faster, but must use certain hardware pins):
@@ -37,7 +37,7 @@ Adafruit_PCD8544 display = Adafruit_PCD8544(8, 4, 5, 7, 6);
 // Note with hardware SPI MISO and SS pins aren't used but will still be read
 // and written to during SPI transfer.  Be careful sharing these pins!
 
-#define LCD_LIGHT_PIN 11
+#define LCD_LIGHT_PIN 3
 
 #define NUMFLAKES 10
 #define XPOS 0
